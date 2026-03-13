@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ADROIT FOODS LIMITED</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img class="logo-img" src="../img/logo.png" alt="ADROIT FOODS LIMITED"> 
+
+  </div>
+<button class="whatsapp-btn" onclick="handleWhatsApp()">
+  <img src="../img/whatsapp.png" alt="WhatsApp">
+  <span>WhatsApp</span>
+</button>
+ 
+  <nav class="nav-actions">
+
+    <button class="shop-btn" onclick="showSection('shop')">SHOP</button><div class="customer-details">
+    
+    <button  class="cart-btn" onclick="showSection('cart')">
+      CART (<span id="cart-count">0</span>)
+    </button>
+  </nav>
+</header>
+
+<!-- SHOP -->
+<section id="shop" class="active">
+  <h2>PRODUCTS </h2>
+  <div class="products">
+    <div class="product">
+      <img src="../img/small yajii.png">
+      <h3>SEASONED CHILI PEPPER(YAJI)</h3>
+      <p>₦25,000</p>
+      <button onclick="addToCart('SEASONED CHILI PEPPER(YAJI)', 25000)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="../img/big yaji.png">
+      <h3>SEASONED CHILIPEPPER (YAJI) </h3>
+      <p>₦15,000</p>
+      <button onclick="addToCart('SEASONED CHILIPEPPER (YAJI)', 15000)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="../img/chili.png">
+      <h3>SEASONED POWERDED PEPPER </h3>
+      <p>₦30,000</p>
+      <button onclick="addToCart('SEASONED POWERDEDPEPPER', 30000)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<section id="shop" class="active">
+  <h2></h2>
+  <div class="products">
+    <div class="product">
+      <img src="../img/garri.png">
+      <h3>GARRI</h3>
+      <p>₦25,000</p>
+      <button onclick="addToCart('GARRI', 25000)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="../img/oat.png">
+      <h3>OAT FLOUR </h3>
+      <p>₦15,000</p>
+      <button onclick="addToCart('OAT FLOUR', 15000)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="../img/ofada.png">
+      <h3>OFADA RICE </h3>
+      <p>₦30,000</p>
+      <button onclick="addToCart('OFADA RICE ', 30000)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+<section id="shop" class="active">
+  <h2> </h2>
+  <div class="products">
+    <div class="product">
+      <img src="../img/powdered garri.png">
+      <h3>POWDERED GARRI(LEBU)</h3>
+      <p>₦25,000</p>
+      <button onclick="addToCart('POWDERED GARRI(LEBU)', 25000)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="../img/yam flourr.png">
+      <h3>YAM FLOUR(ELUBO) </h3>
+      <p>₦15,000</p>
+      <button onclick="addToCart('YAM FLOUR(ELUBO) ', 15000)">Add to Cart</button>
+    </div>
+
+    <div class="product">
+      <img src="../img/beans.png">
+      <h3>BEANS </h3>
+      <p>₦30,000</p>
+      <button onclick="addToCart('BEANS ', 30000)">Add to Cart</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- CART -->
+<section id="cart">
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <h3>Total: ₦<span id="total">0</span></h3>
+  <button onclick="showSection('checkout')" class="checkout-btn">Proceed to Checkout</button>
+</section>
+
+<!-- CHECKOUT -->
+<section id="checkout" style="display:none;">
+  <h2>Checkout</h2>
+
+  <form id="checkoutForm" onsubmit="placeOrder(event)">
+    
+    <input type="text" id="customerName" placeholder="Full Name" required>
+
+    <input type="tel" id="customerPhone" placeholder="Phone Number" required>
+
+    <input type="text" id="customerAddress" placeholder="Delivery Address" required>
+
+    <select id="paymentMethod" required onchange="handlePaymentChange()">
+      <option value="">Select Payment Method</option>
+      <option value="bank">Bank Transfer</option>
+      <option value="delivery">Pay on Delivery</option>
+    </select>
+
+    <!-- BANK DETAILS (HIDDEN BY DEFAULT) -->
+    <div id="bankDetails" class="bank-details">
+      <p><strong>Bank:</strong> Access Bank</p>
+      <p><strong>Account Name:</strong> ADROIT FOODS</p>
+      <p>
+        <strong>Account Number:</strong>
+        <span id="acctNumber">1234567890</span>
+        <button type="button" onclick="copyAccount()">Copy</button>
+      </p>
+      <small>Please make payment and click Place Order to submit receipt.</small>
+    </div>
+
+    <button type="submit" id="placeOrderBtn" disabled>
+      Place Order
+    </button>
+
+  </form>
+</section>
+
+<footer>
+  <p>© 2026 My E-Shop | WhatsApp: 0800-000-0000</p>
+</footer>
+
+<!-- Order Confirmation Modal -->
+<div id="orderModal" class="modal-overlay">
+  <div class="modal">
+    <h2>Confirm Your Order</h2>
+
+    <label>Full Name</label>
+    <input type="text" id="customerName" placeholder="Enter your name" />
+
+    <label>Delivery Address</label>
+    <textarea id="customerAddress" placeholder="Enter delivery address"></textarea>
+
+    <div class="modal-actions">
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="confirm-btn" onclick="confirmOrder()">Confirm Order</button>
+    </div>
+  </div>
+</div>
+
+<script src="../js/script.js"></script>
+</body>
+</html>
